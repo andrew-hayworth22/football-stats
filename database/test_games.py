@@ -7,6 +7,7 @@ db.connect()
 # Database Tests
 def test_get_all() :
     print("Testing get all games...")
+    db_set_up()
 
     games = game_get_all()
 
@@ -27,6 +28,7 @@ def test_get_all() :
 
 def test_get() :
     print('Testing get game...')
+    db_set_up()
 
     games = game_get_all()
 
@@ -38,6 +40,7 @@ def test_get() :
 
 def test_add() :
     print("Testing add game...")
+    db_set_up()
 
     original_length = len(game_get_all())
     teams = team_get_all()
@@ -55,11 +58,12 @@ def test_add() :
 
 def test_update() :
     print("Testing game update...")
+    db_set_up()
 
     original_games = game_get_all()
     original_game = original_games[0]
 
-    game_update(original_game['id'], 3, 4, 2)
+    game_update(original_game['id'], 3, 1, 4, 2, 2)
 
     new_games = game_get_all()
     new_game = game_get(original_game['id'])
@@ -67,11 +71,12 @@ def test_update() :
     assert len(new_games) == len(original_games)
     assert original_game != new_game
     assert new_game['home_team'] == team_get(3)
-    assert new_game['season'] == season_get(2)
+    assert new_game['season']['id'] == 2
     
     
 def test_delete() :
     print('Testing delete game...')
+    db_set_up()
 
     original_games = game_get_all()
     
@@ -83,7 +88,6 @@ def test_delete() :
 
     assert len(new_games) == len(original_games) - 1
 
-test_set_up()
 test_get_all()
 test_get()
 test_add()
