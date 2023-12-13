@@ -4,7 +4,7 @@
     </head>
 
     <body>
-        <a href="/games">Back</a>
+        <a href="/season/{{season_id}}">Back</a>
         <h1>Add Game</h1>
 
         % if message :
