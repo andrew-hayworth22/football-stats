@@ -207,7 +207,6 @@ def delete_game(id) :
 # Create statline screen
 @route('/game/<game_id>/add_stats/<team>')
 def get_new_statline(game_id, team) :
-    print("hit")
     is_home = team == "home"
     return template("statlines/add.tpl", game_id=game_id, is_home=is_home, message="")
 
@@ -228,8 +227,8 @@ def create_statline() :
     interceptions = int(request.forms.get('interceptions'))
     fumbles_recovered = int(request.forms.get('fumbles_recovered'))
     
-    if not game_id or not score or not passing_yards or not passing_attempts or not passing_completions or not rushing_yards or not rushing_attempts or not sacks or not interceptions or not fumbles_recovered or not passing_touchdowns or not rushing_touchdowns:
-        return template("statlines/add.tpl", game_id=game_id, is_home=is_home, message = "Please fill out all required fields")
+    if not game_id:
+        return template("statlines/add.tpl", game_id=game_id, is_home=is_home, message = "There was an error creating the statline")
     
     try :
         db.statline_add(game_id, is_home, score, passing_yards, passing_attempts, passing_completions, passing_touchdowns, rushing_yards, rushing_attempts, rushing_touchdowns, sacks, interceptions, fumbles_recovered)
